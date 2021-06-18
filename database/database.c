@@ -29,12 +29,9 @@ void close_record(int fd){
 }
 
 int insert_record(int fd, commRecieved *rec) {
-    int ret;
-    char *data = strtok(rec->msg," ");
-    for(int i=0;i<2;i++)
-        data = strtok(NULL," ");
-        // write the rest of the data
-    ret = write(fd, rec->msg, sizeof(commRecieved));
+    int ret,i=0;
+    // write whole the rest of the data
+    ret = write(fd, rec->msg, sizeof(commRecieved));      
     return ret;
 }
 
