@@ -15,6 +15,7 @@ requestType docs
 2-drop table
 3-insert into
 4-create db
+5-select
 */ 
 
 // #define PORT 8080
@@ -70,6 +71,11 @@ void *comm_out_callback(void *vargp,struct sockaddr_in server,int sockid){
             toDB(*out,iter,server,sockid);
     }else if(strcmp(tmp1,"CREATE")==0,strcmp(tmp2,"DATABASE")==0){
          out->commandType = 4;
+        printf("HELLOW4\n");
+        if(fork()==0)
+            toDB(*out,iter,server,sockid);
+    }else if(strcmp(tmp1,"SELECT")==0&& strcmp(tmp2,"*")==0){
+        out->commandType = 5;
         printf("HELLOW4\n");
         if(fork()==0)
             toDB(*out,iter,server,sockid);

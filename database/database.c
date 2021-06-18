@@ -30,7 +30,11 @@ void close_record(int fd){
 
 int insert_record(int fd, commRecieved *rec) {
     int ret;
-    ret = write(fd, rec, sizeof(commRecieved));
+    char *data = strtok(rec->msg," ");
+    for(int i=0;i<2;i++)
+        data = strtok(NULL," ");
+        // write the rest of the data
+    ret = write(fd, rec->msg, sizeof(commRecieved));
     return ret;
 }
 
@@ -103,8 +107,13 @@ int main(int argc, char *argv[]) {
         char *dir = strtok(Recieved.msg," ");
         for(int i=0;i<2;i++)
             dir = strtok(NULL," ");
-        fd = open_record("DATA");
+        char tmp[50];
+        strcpy(tmp,dir);
         mkdir(dir,0777);
+        strcat(dir,"/DATA");
+        fd = open_record(dir);
+        int ret;
+        ret = write(fd,dir, sizeof(dir));
     }
 
     //     /*print */
